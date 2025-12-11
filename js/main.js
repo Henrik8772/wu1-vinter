@@ -1,7 +1,7 @@
 /* Om du vill ändra snöfärgen */
 const color = [255, 255, 255];
 /* justera hur snabbt snön faller */
-const speed = 5;
+const speed = 10;
 
 /* Ändra här nedanför på egen risk */
 
@@ -73,3 +73,19 @@ if (title || message) {
   const messageElement = document.querySelector("#message");
   if (messageElement) messageElement.textContent = message;
 }
+
+/*Detta Auto playar jul musiken */
+window.addEventListener("click", () => {
+  const audio = document.getElementById("christmasMusic");
+  if (audio && audio.paused) {
+    audio.play().catch(err => console.log("Audio play failed:", err));
+  }
+});
+
+/*Denna försöker spela musiken när hemsidan har laddats */
+window.addEventListener("load", () => {
+  const audio = document.getElementById("christmasMusic");
+  if (audio) {
+    audio.play().catch(err => console.log("Audio autoplay blocked by browser"));
+  }
+});
