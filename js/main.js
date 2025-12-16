@@ -26,7 +26,6 @@ window.onresize = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 
-  /*Ser till att CSS-storleken matchar för att undvika visuellt överflöd*/
   canvas.style.width = `${window.innerWidth}px`;
   canvas.style.height = `${window.innerHeight}px`;
 };
@@ -69,39 +68,46 @@ const getQueryParams = () => {
 };
 
 const { title, message } = getQueryParams();
-console.log(`Title: ${title}, Message: ${message}`);
 
 if (title || message) {
   const titleElement = document.querySelector("#title");
   if (titleElement) titleElement.textContent = title;
+
   const messageElement = document.querySelector("#message");
   if (messageElement) messageElement.textContent = message;
 }
 
-/*Detta Auto playar jul musiken */
-window.addEventListener("click", () => {
-  const audio = document.getElementById("christmasMusic");
-  if (audio && audio.paused) {
-    audio.play().catch(err => console.log("Audio play failed:", err));
-  }
-});
 
-/*Denna försöker spela musiken när hemsidan har laddats */
-window.addEventListener("load", () => {
-  const audio = document.getElementById("christmasMusic");
-  if (audio) {
-    audio.play().catch(err => console.log("Audio autoplay blocked by browser"));
-  }
-});
+/* 🎵 STARTA MUSIK VID FÖRSTA KLICK */
 
-/* fixar tap/touch för de devices som inte har hover */
-/*Denna del tog jag hjälp av en guide*/
+
+const christmasMusic = document.getElementById("christmasMusic");
+
+function startMusic() {
+  if (christmasMusic && christmasMusic.paused) {
+    christmasMusic.play()
+      .then(() => {
+        document.removeEventListener("click", startMusic);
+      })
+      .catch(err => console.log("Audio play blocked:", err));
+  }
+}
+
+document.addEventListener("click", startMusic);
+
+
+/* fixar tap/touch för devices utan hover */
+
+
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.flip-card').forEach(card => {
     card.addEventListener('click', function (e) {
+      if (
+        e.target &&
+        e.target.tagName &&
+        e.target.tagName.toLowerCase() === 'a'
+      ) return;
 
-      /*växlar inte när du klickar på länkar inuti kortet*/
-      if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'a') return;
       card.classList.toggle('flipped');
     });
   });
