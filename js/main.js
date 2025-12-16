@@ -25,6 +25,10 @@ let particles = [];
 window.onresize = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
+  /*Ser till att CSS-storleken matchar för att undvika visuellt överflöd*/
+  canvas.style.width = `${window.innerWidth}px`;
+  canvas.style.height = `${window.innerHeight}px`;
 };
 
 window.onscroll = () => {
@@ -88,4 +92,17 @@ window.addEventListener("load", () => {
   if (audio) {
     audio.play().catch(err => console.log("Audio autoplay blocked by browser"));
   }
+});
+
+/* fixar tap/touch för de devices som inte har hover */
+/*Denna del tog jag hjälp av en guide*/
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', function (e) {
+
+      /*växlar inte när du klickar på länkar inuti kortet*/
+      if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'a') return;
+      card.classList.toggle('flipped');
+    });
+  });
 });

@@ -29,9 +29,14 @@ html {
     background-repeat: no-repeat;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 html,
 body {
-    height: 100vh;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
 body {
@@ -88,10 +93,10 @@ canvas {
 }
 
 .credit-music {
-    font-size: 2.5rem;
+    font-size: clamp(1rem, 4vw, 2.5rem);
     text-decoration: none;
     color: rgb(255, 255, 255);
-    padding: 2rem;
+    padding: clamp(0.25rem, 1.5vw, 1rem);
 }
 
 .box {
@@ -99,9 +104,11 @@ canvas {
     place-items: center;
     border: 1px transparent;
     border-radius: 25px;
-    width: 44rem;
+    width: min(44rem, 90vw);
+    max-width: 100%;
+    padding: 1.25rem;
     flex-grow: 999;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .box,
@@ -127,14 +134,47 @@ a {
 
 .flip-card-inner {
     position: relative;
-    width: 70rem;
-    height: 26rem;
+    width: min(70rem, 95vw);
+    aspect-ratio: 70 / 26;
+    max-height: 60vh;
     transform-style: preserve-3d;
     transition: transform 0.8s ease;
 }
 
-.flip-card:hover .flip-card-inner {
+.flip-card:hover .flip-card-inner,
+.flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
+}
+
+/* Smaller screens tweaks */
+@media (max-width: 480px) {
+    main {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: var(--step-3);
+    }
+
+    .message-jul {
+        font-size: var(--step-1);
+    }
+
+    .flip-card-inner {
+        width: 95vw;
+        aspect-ratio: 7 / 2;
+        max-height: none;
+    }
+
+    .box {
+        width: 90vw;
+        padding: 0.75rem;
+    }
+
+    canvas {
+        left: 0;
+        top: 0;
+    }
 }
 
 .flip-card-front,
@@ -145,7 +185,7 @@ a {
     border-radius: 25px;
     display: grid;
     place-items: center;
-    padding: 2rem;
+    padding: clamp(0.75rem, 3vw, 2rem);
 }
 
 .flip-card-front {
