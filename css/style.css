@@ -6,7 +6,7 @@
 }
 
 :root {
-    --color-bg: rgba(103, 157, 157, 0.587);
+    --color-bg: rgb(0, 0, 0);
     --color-fg: #fff;
 
     --font-body: sans-serif;
@@ -22,6 +22,13 @@
     --step-5: clamp(4.7348rem, 3.6783rem + 5.2826vw, 7.7723rem);
 }
 
+html {
+    background-image: url('beautiful-sky.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 html,
 body {
     height: 100vh;
@@ -32,7 +39,6 @@ body {
     padding: 0;
     display: grid;
     place-items: center;
-    background-color: var(--color-bg);
     z-index: -1;
 }
 
@@ -56,11 +62,16 @@ h1 {
     font-family: var(--font-body);
 }
 
+.no-spacing {
+    margin: 0;
+}
+
 canvas {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 0;
+    pointer-events: none;
 }
 
 .nav-credit {
@@ -79,7 +90,7 @@ canvas {
 .credit-music {
     font-size: 2.5rem;
     text-decoration: none;
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 2rem;
 }
 
@@ -108,4 +119,40 @@ a {
     color: black;
     text-decoration: none;
     padding-bottom: 1.5rem;
+}
+
+.flip-card {
+    perspective: 1200px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 70rem;
+    height: 26rem;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 25px;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+}
+
+.flip-card-front {
+    background-color: rgba(255, 255, 255, 0.0);
+}
+
+.flip-card-back {
+    background-color: rgba(255, 255, 255, 0.0);
+    transform: rotateY(180deg);
 }
